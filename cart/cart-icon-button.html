@@ -1,0 +1,67 @@
+
+<style>
+
+  :host {
+    display:  block;
+    position: relative; /* fixes safari badge placement bug, can also be set to absolute from outside */
+    opacity:  0; /* don't show badge on startup, wait til it positions itself */
+  }
+
+  .badges {
+    transition: transform 0.3s ease-out;
+    transform:  scale(0);
+    --paper-badge-height: 14px;
+    --paper-badge-width:  14px;
+  }
+
+  .cart-badge {
+    transform-origin: -9px 10px;
+    --paper-badge-background: var(--badge-background-color, var(--app-light-color));
+    --paper-badge: {
+      display:     flex;
+      align-items: center; /* places label in center vertically */
+      position:    absolute;
+      top:         2px;
+      right:       2px;
+      font-size:   8px;
+      color:       var(--badge-number-color, var(--contant-light-text, white));
+    };
+  }
+
+  .warn-badge {
+    transform-origin: -8px 26px;
+    --paper-badge-background: var(--app-error-color, red);
+    --paper-badge: {
+      display:     flex;
+      align-items: center; /* places label in center vertically */
+      position:    absolute;
+      top:         20px;
+      right:       2px;
+      font-size:   8px;
+      color:       var(--badge-number-color, var(--contant-light-text, white));
+    };
+  }
+
+  .show-cart-badge {
+    transform: scale(1);
+  }
+
+</style>
+
+
+<paper-icon-button id="cart" 
+                   icon="[[icon]]"
+                   aria-label="Open cart button">
+</paper-icon-button>
+
+<paper-badge id="cartBadge"
+             class$="badges cart-badge [[__computeCartBadgeClass(cartQuantity)]]"
+             for="cart"
+             label="[[cartQuantity]]">
+</paper-badge> 
+
+<paper-badge id="cartBadgeWarn"
+             class$="badges warn-badge [[__computeCartBadgeWarn(showLabel)]]"
+             for="cart"
+             label="!">
+</paper-badge>    
