@@ -1,0 +1,220 @@
+
+/*
+ * 
+ * lazy loaded by checkout-pay.js open()
+ * 
+ *
+ *
+ */
+
+#payOverlay {
+  display:          none;
+  justify-content:  center;
+  position:         absolute;
+  top:              0;
+  left:             0;
+  width:            100%;
+  min-height:       100vh;
+  padding-bottom:   128px;
+  background-color: var(--app-background-color, white);
+  opacity:          0;
+  transition:       opacity 0.2s ease-in;
+  --dark-text:      #212121;
+  --confirm-green:  #219653;
+}
+
+/* ios scroll fix */
+#payOverlay::before {
+  content:  '';
+  position: fixed;
+  top:      -128px;
+  right:    0;
+  bottom:   -128px;
+  left:     0;
+  background-color: var(--app-body-color, #eeeeee);
+}
+
+#pay-card {
+  display:          inline-table; /* uses intrinsic height of content */
+  position:         relative;
+  max-width:        340px;
+  width:            100%;
+  min-height:       500px;
+  margin:           16px;
+  padding:          16px;
+  background-color: white;
+  color:            black;
+  border-radius:    2px;
+  box-shadow:       0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                    0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+#pay-header {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  margin-bottom:   24px;
+}
+
+#payCardTitle {
+  font-size: 20px;
+  color:     var(--dark-text);
+}
+
+#exitPayBtn {
+  right: -12px;
+  color:  var(--dark-text);
+}
+
+#vaultCheckbox {
+  font-size:     14px;
+  margin-bottom: 24px;
+  --paper-checkbox-unchecked-color:     var(--dark-text);
+  --paper-checkbox-label-color:         var(--dark-text);
+  --paper-checkbox-unchecked-ink-color: var(--dark-text);
+  --paper-checkbox-checked-color:       var(--app-accent-color);
+  --paper-checkbox-checked-ink-color:   var(--app-accent-color); 
+}
+
+#pay-card-content {
+  position:       relative;
+  min-height:     401px;
+  padding-bottom: 16px;
+}
+
+[data-braintree-id="sheet-container"] {
+  margin-bottom: -13px;
+}
+
+[data-braintree-id="card"] {
+  border: none;
+}
+
+[data-braintree-id="card-sheet-header"] {
+  display:         flex;
+  flex-direction:  column;
+  justify-content: space-between;
+  align-items:     flex-start;
+  height:          112px;
+  border:          none;
+  padding:         0px;
+  margin-bottom:   6px;
+}
+
+[data-braintree-id="card-view-icons"] {
+  display:         flex;
+  justify-content: space-between;
+  width:           100%;
+}
+
+[data-braintree-id="visa-card-icon"] {
+  margin-left: -5px;
+}
+
+[data-braintree-id="number-field-group"] {
+  margin: 0px -15px 16px -15px;
+}
+
+[data-braintree-id="expiration-date-field-group"] {
+  margin: 0px -15px 16px -15px;
+}
+
+[data-braintree-id="cvv-field-group"] {
+  margin: 0px -15px 16px -15px;
+}
+
+#paySpinnerContainer {
+  flex-direction: column;
+}
+
+#paySpinner {
+  --paper-spinner-color: var(--app-primary-color);
+}
+
+.pay-centered-items-overlay {
+  display:          flex;
+  justify-content:  center;
+  align-items:      center;
+  position:         absolute;
+  top:              0px;
+  right:            0px;
+  bottom:           0px;
+  left:             0px;
+  padding:          16px;
+  background-color: white;
+  transition:       opacity 0.2s ease-in;
+  opacity:          0;
+  z-index:          10;
+}
+
+.pay-centered-content {
+  display:         flex;
+  justify-content: center;
+  flex-direction:  column;
+}
+
+.pay-centered-text {
+  text-align: center;
+}
+
+#payBtn {
+  width:            100%;
+  margin:           16px 0px 48px 0px;
+  color:            white;
+  background-color: var(--app-accent-color);
+}
+
+#braintree-badge {
+  display:         flex;
+  justify-content: center;
+  margin-top:      24px;
+}
+
+#payBtn[disabled] {
+  color:            var(--disabled-text-color);
+  background-color: var(--app-disabled-color);
+}
+
+.disclaimer {
+  font-size: 14px;
+  color:     var(--secondary-text-color);
+}
+/* display controlled by spriteful-pay.js */
+#paySuccessMessage {
+  display: none;
+}
+
+#pay-success-icon {
+  align-self: center;
+  width:      64px;
+  height:     64px;
+  color:      var(--confirm-green);
+}
+
+#pay-authorized-text {
+  margin-bottom: 4px;
+  color:         var(--confirm-green);
+}
+
+#pay-confirmation-number {
+  font-size:  12px;
+  margin-top: 0px;
+  color:      var(--confirm-green);
+}
+/* display controlled by spriteful-pay.js */
+#payDeclinedMessage {
+  display: none;
+}
+
+#paySuccessBtn {
+  margin:           16px auto 0px auto;
+  color:            white;
+  background-color: var(--app-accent-color);
+}
+
+#payDeclinedBtn {
+  margin:           16px auto 0px auto;
+  color:            white;
+  background-color: var(--app-accent-color);
+}

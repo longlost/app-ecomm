@@ -1,0 +1,28 @@
+
+<style>
+
+  :host {
+    display:                block;
+    --img-background-color: inherit;
+  }
+
+  #img {
+    width:            280px; 
+    height:           44px;
+    background-color: var(--img-background-color);
+  }
+
+</style>
+
+      
+<a href="[[__computeHref(_merchantId)]]" 
+   target="_blank" 
+   rel="noreferrer">
+  <iron-image id="img"
+              alt="braintree merchant verified badge"
+              src="[[_src]]" 
+              fade
+              preload
+              sizing="contain">
+  </iron-image>
+</a>

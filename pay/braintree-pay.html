@@ -1,0 +1,322 @@
+
+<style>
+
+	#payOverlay {
+	  display:          none;
+	  justify-content:  center;
+	  position:         absolute;
+	  top:              0;
+	  left:             0;
+	  width:            100%;
+	  min-height:       100vh;
+	  padding-bottom:   128px;
+	  background-color: var(--app-background-color, white);
+	  opacity:          0;
+	  transition:       opacity 0.2s ease-in;
+	  --dark-text:      #212121;
+	  --confirm-green:  #219653;
+	}
+
+	/* ios scroll fix */
+	#payOverlay::before {
+	  content:  '';
+	  position: fixed;
+	  top:      -128px;
+	  right:    0;
+	  bottom:   -128px;
+	  left:     0;
+	  background-color: var(--app-body-color, #eeeeee);
+	}
+
+	#pay-card {
+	  display:          inline-table; /* uses intrinsic height of content */
+	  position:         relative;
+	  max-width:        340px;
+	  width:            100%;
+	  min-height:       500px;
+	  margin:           16px;
+	  padding:          16px;
+	  background-color: white;
+	  color:            black;
+	  border-radius:    2px;
+	  box-shadow:       0 2px 2px 0 rgba(0, 0, 0, 0.14),
+	                    0 1px 5px 0 rgba(0, 0, 0, 0.12),
+	                    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	}
+
+	#pay-header {
+	  display:         flex;
+	  justify-content: space-between;
+	  align-items:     center;
+	  margin-bottom:   24px;
+	}
+
+	#payCardTitle {
+	  font-size: 20px;
+	  color:     var(--dark-text);
+	}
+
+	#exitPayBtn {
+	  right: -12px;
+	  color:  var(--dark-text);
+	}
+
+	#vaultCheckbox {
+	  font-size:     14px;
+	  margin-bottom: 24px;
+	  --paper-checkbox-unchecked-color:     var(--dark-text);
+	  --paper-checkbox-label-color:         var(--dark-text);
+	  --paper-checkbox-unchecked-ink-color: var(--dark-text);
+	  --paper-checkbox-checked-color:       var(--app-accent-color);
+	  --paper-checkbox-checked-ink-color:   var(--app-accent-color); 
+	}
+
+	#pay-card-content {
+	  position:       relative;
+	  min-height:     401px;
+	  padding-bottom: 16px;
+	}
+
+	[data-braintree-id="sheet-container"] {
+	  margin-bottom: -13px;
+	}
+
+	[data-braintree-id="card"] {
+	  border: none;
+	}
+
+	[data-braintree-id="card-sheet-header"] {
+	  display:         flex;
+	  flex-direction:  column;
+	  justify-content: space-between;
+	  align-items:     flex-start;
+	  height:          112px;
+	  border:          none;
+	  padding:         0px;
+	  margin-bottom:   6px;
+	}
+
+	[data-braintree-id="card-view-icons"] {
+	  display:         flex;
+	  justify-content: space-between;
+	  width:           100%;
+	}
+
+	[data-braintree-id="visa-card-icon"] {
+	  margin-left: -5px;
+	}
+
+	[data-braintree-id="number-field-group"] {
+	  margin: 0px -15px 16px -15px;
+	}
+
+	[data-braintree-id="expiration-date-field-group"] {
+	  margin: 0px -15px 16px -15px;
+	}
+
+	[data-braintree-id="cvv-field-group"] {
+	  margin: 0px -15px 16px -15px;
+	}
+
+	#paySpinnerContainer {
+	  flex-direction: column;
+	}
+
+	#paySpinner {
+	  --paper-spinner-color: var(--app-primary-color);
+	}
+
+	.pay-centered-items-overlay {
+	  display:          flex;
+	  justify-content:  center;
+	  align-items:      center;
+	  position:         absolute;
+	  top:              0px;
+	  right:            0px;
+	  bottom:           0px;
+	  left:             0px;
+	  padding:          16px;
+	  background-color: white;
+	  transition:       opacity 0.2s ease-in;
+	  opacity:          0;
+	  z-index:          10;
+	}
+
+	.pay-centered-content {
+	  display:         flex;
+	  justify-content: center;
+	  flex-direction:  column;
+	}
+
+	.pay-centered-text {
+	  text-align: center;
+	}
+
+	#payBtn {
+	  width:            100%;
+	  margin:           16px 0px 48px 0px;
+	  color:            white;
+	  background-color: var(--app-accent-color);
+	}
+
+	#braintree-badge {
+	  display:         flex;
+	  justify-content: center;
+	  margin-top:      24px;
+	}
+
+	#payBtn[disabled] {
+	  color:            var(--disabled-text-color);
+	  background-color: var(--app-disabled-color);
+	}
+
+	.disclaimer {
+	  font-size: 14px;
+	  color:     var(--secondary-text-color);
+	}
+	/* display controlled by spriteful-pay.js */
+	#paySuccessMessage {
+	  display: none;
+	}
+
+	#pay-success-icon {
+	  align-self: center;
+	  width:      64px;
+	  height:     64px;
+	  color:      var(--confirm-green);
+	}
+
+	#pay-authorized-text {
+	  margin-bottom: 4px;
+	  color:         var(--confirm-green);
+	}
+
+	#pay-confirmation-number {
+	  font-size:  12px;
+	  margin-top: 0px;
+	  color:      var(--confirm-green);
+	}
+	/* display controlled by spriteful-pay.js */
+	#payDeclinedMessage {
+	  display: none;
+	}
+
+	#paySuccessBtn {
+	  margin:           16px auto 0px auto;
+	  color:            white;
+	  background-color: var(--app-accent-color);
+	}
+
+	#payDeclinedBtn {
+	  margin:           16px auto 0px auto;
+	  color:            white;
+	  background-color: var(--app-accent-color);
+	}
+
+</style>
+
+
+<!-- ios fix
+ *  ios fix since the dropin inputs are in an iframe 
+ *  must steal focus to then blur the dummy input in order to lower the keyboard 
+-->
+<input id="dummyInput" 
+       style="position:  absolute;
+              top:      -100px;
+              left:     -100px;
+              z-index:  -1;
+              font-size: 16px;">
+</input>
+
+<!-- 
+  the following local dom is inserted into <body> in connectedCallback() 
+  so braintree can insert itself outside of shadow dom scope 
+-->
+
+<!-- <div id="payOverlay"> -->
+
+
+<app-modal id="modal">
+
+
+  <div id="pay-card" 
+  		 slot="card-content-slot">
+
+    <div id="pay-header">
+      <div id="payCardTitle"></div>
+      <paper-icon-button id="exitPayBtn" 
+                         on-click="__exitPayButtonClicked" 
+                         icon="app-icons:close">
+      </paper-icon-button>
+    </div>
+
+    <paper-checkbox id="vaultCheckbox"
+                    on-change="__savePayMethodsBtnClicked">
+      Securely save my payment methods for next time. *
+    </paper-checkbox>
+
+    <div id="pay-card-content">
+
+      <div id="payContainer"></div> <!-- braintree dropin-ui inserted here -->
+
+      <div id="paySpinnerContainer" class="pay-centered-items-overlay">
+        <paper-spinner-lite id="paySpinner"></paper-spinner-lite>
+        <p id="paySpinnerText"></p>
+      </div>
+    </div>
+
+    <paper-button id="payBtn" 
+                  on-click="__payButtonClicked" 
+                  disabled
+                  raised>
+                  purchase
+    </paper-button>
+
+    <braintree-badge></braintree-badge>
+
+    <p class="disclaimer">
+      * Payment methods are saved in Braintree's PCI compliant Vault. We are never granted access to these records.
+    </p>  
+
+    <div id="paySuccessMessage" class="pay-centered-items-overlay">
+      <div id="pay-success-content" class="pay-centered-content">
+        <h3 class="pay-centered-text">
+          Thank you!
+        </h3>
+        <iron-icon id="pay-success-icon" icon="app-icons:check"></iron-icon>
+        <p id="pay-authorized-text" class="pay-centered-text">
+          Payment Authorized
+        </p>
+        <p id="pay-confirmation-number" class="pay-centered-text">
+          <!-- confirmation code text inserted here -->
+        </p>
+        <paper-button id="paySuccessBtn" 
+                      on-click="__successButtonClicked" 
+                      raised>
+                      done
+        </paper-button>
+      </div>
+    </div>
+
+    <div id="payDeclinedMessage" class="pay-centered-items-overlay">
+      <div id="pay-declined-content" class="pay-centered-content">
+        <h3 class="pay-centered-text">
+          Sorry, we could not process your payment at this time.
+        </h3>
+        <p class="pay-centered-text">
+          You have not been charged.
+        </p>
+        <paper-button id="payDeclinedBtn" 
+                      on-click="__declinedButtonClicked" 
+                      raised>
+                      got it
+        </paper-button>
+      </div>
+    </div>
+
+  </div>
+
+
+<!-- </div> -->
+</app-modal>
+

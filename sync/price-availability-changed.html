@@ -1,0 +1,142 @@
+
+<style>
+
+  #slotItemLabel {
+    display: none;
+  }
+  
+  #overlay {
+    --overlay-toolbar-background-color: var(--app-primary-color);
+  }
+
+  #content {
+    max-width: 500px;
+    margin:    auto;
+    padding:   16px;
+  }
+
+  h1 {
+    color:       var(--app-dark-color);
+    font-weight: normal;
+    font-size:   24px;
+  }
+
+  #slot::slotted(*) {
+    margin-bottom: 16px;
+  }
+
+  #slot::slotted(.slotItemLabel) {
+    margin-bottom: 0px;
+  }
+
+  .centered-buttons {
+    display:        flex;
+    flex-direction: column;
+    margin-top:     64px;
+  }
+
+  #proceed-button {
+    background-color: var(--app-accent-color);
+    color:            white;
+  }
+
+  #proceed-button[hidden] {
+    display: none;
+  } 
+
+  #edit-order-button {
+    background-color: var(--app-primary-color);
+    color:            white;
+  }
+
+  #cancel-order-button {
+    background-color: var(--app-dark-color);
+    color:            white;
+  }
+
+  .call-to-action-btns {
+    margin: 0px 0px 32px 0px;
+  }
+
+  app-modal {
+    --modal-card-header-color: var(--app-dark-color);
+  }
+
+  strong {
+    color: var(--app-accent-color);
+  }
+
+  .dismiss-btn {
+    color: var(--app-accent-color);
+  }
+
+</style>
+
+<!-- must have slot set to sync-items since this is app-checkout's sync slot name -->
+<sync-label id="slotItemLabel" 
+            class="slotItemLabel" 
+            slot="sync-items">
+</sync-label>
+
+
+<app-header-overlay id="overlay"
+                    reveal-header
+                    reset-scroll
+                    header-size="1"
+                    prebuilt-animation="from-right"
+                    title="Changes">
+
+  <div id="content" slot="content">
+    <h1>The following [[_headingStr]] changed.</h1>
+    
+    <slot id="slot"></slot>
+
+    <div class="centered-buttons">
+      <paper-button id="proceed-button"
+                    class="call-to-action-btns"
+                    hidden="[[__computeProceedBtnHidden(_priceAndQtyChanges.qtyChanges)]]"
+                    raised
+                    on-click="__proceedWithChangesButtonClicked">
+        proceed with changes
+      </paper-button>
+      <paper-button id="edit-order-button"
+                    class="call-to-action-btns"
+                    raised
+                    on-click="__editOrderButtonClicked">
+        edit order
+      </paper-button>
+      <paper-button id="cancel-order-button"
+                    class="call-to-action-btns"
+                    raised
+                    on-click="__cancelOrderButtonClicked">
+        cancel order
+      </paper-button>
+    </div>
+  </div>
+
+</app-header-overlay>
+
+
+<app-modal id="modal"
+           heading="Please pardon the interruption!">
+
+  <div slot="card-content-slot"> 
+    <p>
+      [[_theStr]]<strong>[[_priceStr]]</strong>[[_andStr]]<strong>[[_qtyStr]]</strong>[[_hasStr]]changed for [[_itemStr]] in your cart.
+    </p>
+    <p>
+      We are sorry for the inconvenience!
+    </p>
+    <p>
+      Next, we will show you what's changed.
+    </p>    
+  </div>
+
+  <div slot="card-actions-slot">
+    <paper-button class="dismiss-btn" 
+                  on-click="__modalButtonClicked">
+      view items
+    </paper-button> 
+  </div>
+
+</app-modal>

@@ -1,0 +1,92 @@
+
+<style>
+
+	:host {
+		display:  block;
+		position: relative;
+		padding:  16px;
+	}
+
+	#background {
+		position: 				absolute;
+		top: 							0px;
+		right: 						0px;
+		bottom:  				 -64px;
+		left: 						0px;
+		border-radius:  	3px;
+		background-color: var(--app-error-color);
+		z-index: 				 -1;
+	}
+
+	#grid {
+		display: 							 grid;
+		grid-template-columns: 1fr 1fr;
+		grid-column-gap: 			 16px;
+		grid-row-gap: 				 32px;
+	}
+
+	#grid div {
+		place-self: center;
+	}
+
+	.title {
+		font-size: 20px;
+		color: 		 white;
+	}
+
+	.secondary {
+		font-size: 14px;
+		color: 	 	 rgba(255, 255, 255, 0.6);
+	}
+
+	#foreground {  
+    position:         absolute;
+    left: 						0px;
+    background-color: var(--app-background-color);
+    pointer-events:   auto;
+    opacity:          0.3; 
+    z-index:  				1;
+	}
+
+</style>
+
+
+<div id="background"></div>
+
+<div id="grid">
+
+	<div class="title" 
+			 hidden="[[__computeHidden(label.price.dbVal)]]">
+		Price
+	</div>
+
+	<div hidden="[[__computeHidden(label.price.dbVal)]]">
+		<div class="secondary">
+			<span>was $</span>
+			<span class="title">[[label.price.val]]</span>
+		</div>
+		<div class="secondary">
+			<span>now $</span>
+			<span class="title">[[label.price.dbVal]]</span>
+		</div>
+	</div>
+
+	<div class="title" 
+			 hidden="[[__computeHidden(label.quantity.dbVal)]]">
+		In Stock
+	</div>
+
+	<div hidden="[[__computeHidden(label.quantity.dbVal)]]">
+		<div class="secondary">
+			<span>had </span>
+			<span class="title">[[label.quantity.val]]</span>
+		</div>
+		<div class="secondary">
+			<span>now </span>
+			<span class="title">[[label.quantity.dbVal]]</span>
+		</div>
+	</div>
+
+</div>
+
+<div id="foreground"></div>

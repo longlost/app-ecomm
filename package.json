@@ -1,0 +1,43 @@
+{
+  "name": "@longlost/app-ecomm",
+  "version": "1.0.0",
+  "description": "A mono repo that contains commonly used elements for e-commerce applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longlost/app-ecomm.git"
+  },
+  "author": "Longlost Dev longlostdev@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/longlost/app-ecomm/issues"
+  },
+  "homepage": "https://github.com/longlost/app-ecomm#readme",
+  "dependencies": {
+    "@longlost/app-element": "^1.1.1",
+    "@longlost/app-icons": "^1.0.11",
+    "@longlost/app-inputs": "^1.3.5",
+    "@longlost/app-overlays": "^1.0.1",
+    "@longlost/app-spinner": "^1.1.1",
+    "@longlost/lambda": "^2.1.1",
+    "@longlost/responsive-image": "^1.0.5",
+    "@longlost/services": "^3.1.1",
+    "@longlost/utils": "^1.3.5",
+    "@polymer/iron-icon": "^3.0.1",
+    "@polymer/iron-image": "^3.0.2",
+    "@polymer/paper-button": "^3.0.1",
+    "@polymer/paper-checkbox": "^3.1.0",
+    "@polymer/paper-icon-button": "^3.0.2",
+    "@polymer/paper-input": "^3.2.0",
+    "@polymer/paper-radio-button": "^3.0.1",
+    "@polymer/paper-radio-group": "^3.0.1",
+    "@sendgrid/mail": "^6.5.2",
+    "binpackingjs": "^2.3.2",
+    "braintree": "^2.21.0",
+    "braintree-web-drop-in": "^1.22.0",
+    "shippo": "^1.3.1"
+  }
+}
