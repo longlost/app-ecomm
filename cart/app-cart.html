@@ -1,0 +1,166 @@
+
+<style>
+
+  :host {
+    --cart-toolbar-background-color: var(--app-dark-color);
+  }
+
+  #overlay {
+    --overlay-toolbar-background-color: var(--cart-toolbar-background-color);
+  }
+
+  #contents {
+    margin:    32px auto;
+    max-width: 500px;
+  }
+
+  #flavor-text {
+    position:   absolute;
+    top:        96px;
+    left:       0px;
+    right:      0px;
+    height:     42px;
+    padding:    16px;
+    text-align: center;
+    color:      var(--app-accent-color);
+  }
+
+  .hide {
+    opacity: 0;
+  }
+
+  .show {
+    transition: opacity 0.4s ease-in-out 0.3s;
+    opacity:    1;
+  }
+
+  #belowRepeaterContent {
+    background-color: var(--app-background-color);
+    padding:          16px 0px;
+  }
+
+  #subtotal {
+    @apply --divider-mixin;
+    display:         flex;
+    flex-direction:  column;
+    justify-content: center;
+    align-items:     center;
+    padding:         32px 0px;
+    margin-top:      32px; 
+    transition:      opacity 0.2s ease-in;
+  }
+
+  #subtotal[hidden] {
+    display: none;
+  }
+
+  .hide-subtotal {
+    opacity: 0;
+  }
+
+  .show-subtotal {
+    opacity: 1;
+  } 
+
+  #subtotal h1 {
+    font-size:   24px;
+    font-weight: normal;
+    color:       var(--dark-text-color); 
+    margin:      0px;
+  }
+
+  .secondary-text {
+    color: var(--secondary-text-color);
+  }
+
+  #buttons-wrapper {
+    padding: 0px 16px;
+  }
+
+  #braintree-badge {
+    display:         flex;
+    justify-content: center;
+    margin-top:      32px;
+  }
+
+  #checkout-btn {
+    background-color: var(--app-accent-color);
+    color:            white;
+  }
+
+  #checkout-btn[disabled] {
+    background-color: var(--app-disabled-color);
+    color:            var(--disabled-text-color);
+  } 
+  
+  #continue-shopping-btn {
+    background-color: var(--app-background-color);
+    color:            var(--app-accent-color);
+  }
+
+  .btns {
+    width:  100%;
+    margin: 8px 0px;
+  }
+
+  @media only screen and (min-width: 720px) {
+
+    #flavor-text {
+      left:      calc(1vw + 20%);
+      right:     calc(1vw + 20%);
+      font-size: 20px;
+    }
+
+  }
+
+</style>
+
+
+<app-header-overlay id="overlay"
+                    reveal-header
+                    header-size="1"
+                    prebuilt-animation="from-right"
+                    title="[[title]]">
+
+  <div id="contents" 
+       slot="content">
+
+    <p id="flavor-text"
+       class$="hide [[__computeHiddenFlavorText(_items)]]">
+      [[__computeFlavorTextWords(emptyCartWords, _items)]]
+    </p>
+
+    <slot id="slot"></slot>
+    
+    <div id="belowRepeaterContent" 
+         on-transitionend="__belowRepeaterContentTransitionend">   
+      <slot name="subtotal-slot">   
+        <div id="subtotal" 
+             class$="hide-subtotal [[__computePricingClass(_subtotal)]]">
+          <h1>$[[_subtotal]]</h1>
+          <div class="secondary-text">Subtotal</div>
+        </div>
+      </slot>
+  
+      <div id="buttons-wrapper">
+        <paper-button id="checkout-btn"
+                      class="btns"
+                      raised 
+                      on-click="__checkoutButtonClicked" 
+                      disabled="[[__computeCheckoutButtonDisabled(_subtotal, disabled)]]">
+          [[buttonText]]
+        </paper-button>
+        <paper-button id="continue-shopping-btn" 
+                      class="btns"
+                      on-click="__continueShoppingButtonClicked">
+          Continue Shopping
+        </paper-button>
+
+        <braintree-badge id="braintree-badge"></braintree-badge>
+        
+      </div> 
+      
+    </div>
+
+  </div>
+</app-header-overlay>
