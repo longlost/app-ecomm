@@ -1,6 +1,6 @@
 {
   "name": "@longlost/app-ecomm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A mono repo that contains commonly used elements for e-commerce applications.",
   "main": "index.js",
   "scripts": {
